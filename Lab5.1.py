@@ -1,5 +1,5 @@
 class Book():
-    def neinit(self, title, author, year):
+    def __init__(self, title, author, year):
         self.title = title
         self.author = author
         self.year = year
@@ -9,4 +9,5 @@ class Book():
 luti_kniga = Book('Книга', 'Автор', '2024')
 bad_kniga = Book('Плохая книга', 'Плохой автор', '990')
 
-print(luti_kniga.get_info(), bad_kniga.gat_info)
+print(luti_kniga.get_info())
+print(bad_kniga.get_info())
