@@ -1,0 +1,79 @@
+body {
+  color: white;
+  background-color: black;
+}
+
+header {
+  width: 100%;
+  top: 0;
+  background: rgba(0, 0, 0, 0.9);
+  font-size: 48px;
+  justify-content: center;
+  display: flex;
+  font-family: "Tektur", sans-serif;
+  position: fixed;
+}
+
+main {
+  width: 100%;
+  background-image: url(assets/2.png);
+  background-position: initial;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  image-resolution: 10%;
+  display: inline-flex;
+  flex-direction: column;
+  font-family: "Tektur", sans-serif;
+}
+
+main img {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+}
+main img:hover {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+footer {
+  background-color: black;
+  font-family: "Tektur", sans-serif;
+}
+
+footer a {
+  opacity: 0.8;
+}
+
+footer a:hover {
+  opacity: 1;
+}
+
+li,
+p {
+  font-size: 2em;
+}
+
+h1 {
+  font-size: 4.5em;
+}
+
+h3 {
+  font-size: 4em;
+}
+
+h5 {
+  font-size: 3em;
+}
+
+button {
+  font-size: 1em;
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  font-family: "Tektur", sans-serif;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+}
