@@ -7,7 +7,6 @@ public class Season {
 
         String result = season(month);
         System.out.println(result);
-        
         scanner.close();
     }
 

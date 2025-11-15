@@ -3,10 +3,7 @@ import java.util.Scanner;
 public class Rectangle {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("");
         double length = scanner.nextDouble();
-        
-        System.out.print("");
         double width = scanner.nextDouble();
         
         double area = rectangleArea(length, width);

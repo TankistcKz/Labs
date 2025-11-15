@@ -10,7 +10,7 @@ class FileCopy {
                 writer.write(line);
                 writer.newLine();
             }
-            System.out.println("Файл успешно скопирован");
+            System.out.println("Файл скопирован");
             
         } catch (FileNotFoundException e) {
             System.out.println("Ошибка: файл не найден - " + e.getMessage());

@@ -4,7 +4,6 @@ public class Fahrenheit {
     
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("");
         double celsius = scanner.nextDouble();
         
         double fahrenheit = toFahrenheit(celsius);
