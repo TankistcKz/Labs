@@ -17,11 +17,9 @@ public class IPAddressValidator {
     }
     
     public static boolean isValidIP(String ip) {
-        String octetPattern = "(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]?\\d)";
-        String ipPattern = "^" + octetPattern + "\\." + 
-                          octetPattern + "\\." + 
-                          octetPattern + "\\." + 
-                          octetPattern + "$";
+        String intPattern = "(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]?\\d)";
+        String ipPattern = "^" + intPattern + "\\." + intPattern + "\\." + 
+                          intPattern + "\\." + intPattern + "$";
         
         Pattern pattern = Pattern.compile(ipPattern);
         Matcher matcher = pattern.matcher(ip);

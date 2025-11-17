@@ -2,9 +2,9 @@ import java.util.regex.*;
 
 public class CapitalAfterLowerFinder {
     public static void main(String[] args) {
-        String text = "Зачем мНе брИтанский Дырокол если еСть совЕтский КаморниК?"
+        String text = "Зачем мНе брИтанский Дырокол если еСть совЕтский КаморниК?";
 
-        Pattern pattern = Pattern.compile("[a-z][A-Z]");
+        Pattern pattern = Pattern.compile("[а-я][А-Я]");
         Matcher matcher = pattern.matcher(text);
         StringBuffer result = new StringBuffer();
         

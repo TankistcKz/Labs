@@ -5,18 +5,18 @@ import java.util.List;
 public class WordsStartingWithLetter {
     public static void main(String[] args) {
         String text = "Мам купи Abrams!" +
-                        "У нас есть Abrams! дома" +
-                        "Abrams! дома: 🚜 ";
-        char letter = 'A';
-        List<String> words = findWordsStartingWith(text, letter);
+                        "У нас есть abrams дома" +
+                        "ababs дома: 🚜 ";
+        String letter = "A";
 
+        List<String> words = findWordsStartingWith(text, letter);
         System.out.println(words);
     }
     
-    public static List<String> findWordsStartingWith(String text, char letter) {
+    public static List<String> findWordsStartingWith(String text, String letter) {
         List<String> words = new ArrayList<>();
 
-        String patternStr = "\\b" + Pattern.quote(String.valueOf(letter)) + "\\w*";
+        String patternStr = "\\b" + letter + "\\w*";
         Pattern pattern = Pattern.compile(patternStr, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(text);
         
