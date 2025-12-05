@@ -14,5 +14,4 @@ public class Fahrenheit {
     public static double toFahrenheit(double celsius) {
         return celsius * 9.0 / 5.0 + 32;
     }
-    
 }
