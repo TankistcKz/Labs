@@ -13,21 +13,16 @@ public class Main {
     public static void main(String[] args) {
         logger.info("Приложение запущено");
 
-        // Читаем build-passport.properties
         try (InputStream input = Main.class.getClassLoader().getResourceAsStream("build-passport.properties")) {
             if (input != null) {
                 Properties prop = new Properties();
                 prop.load(input);
 
-                System.out.println("\n══════════════════════════════════════");
-                System.out.println("     ИНФОРМАЦИЯ О СБОРКЕ");
-                System.out.println("══════════════════════════════════════");
-                System.out.println("👤 Пользователь: " + prop.getProperty("build.user"));
-                System.out.println("💻 ОС: " + prop.getProperty("build.os"));
-                System.out.println("☕ Java: " + prop.getProperty("build.java.version"));
-                System.out.println("⏰ Время сборки: " + prop.getProperty("build.time"));
-                System.out.println("📝 Сообщение: " + prop.getProperty("build.message"));
-                System.out.println("══════════════════════════════════════\n");
+                System.out.println("Пользователь: " + prop.getProperty("build.user"));
+                System.out.println("ОС: " + prop.getProperty("build.os"));
+                System.out.println("Java: " + prop.getProperty("build.java.version"));
+                System.out.println("Время сборки: " + prop.getProperty("build.time"));
+                System.out.println("Сообщение: " + prop.getProperty("build.message"));
 
                 logger.info("Build passport загружен успешно");
             } else {
@@ -37,14 +32,12 @@ public class Main {
             logger.error("Ошибка при чтении build-passport.properties", e);
         }
 
-        // ИСПРАВЛЕНИЕ: используем Scanner вместо System.console()
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите строку: ");
         String input = scanner.nextLine();
 
         logger.info("Пользователь ввел: {}", input);
 
-        // Работа с Apache Commons Lang3
         String reversed = StringUtils.reverse(input);
         String capitalized = StringUtils.capitalize(input);
 

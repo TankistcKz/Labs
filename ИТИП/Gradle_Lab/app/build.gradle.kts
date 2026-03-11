@@ -6,8 +6,8 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
-import org.gradle.api.file.DirectoryProperty // Добавляем для типа
-import org.gradle.api.tasks.InputDirectory // Добавляем для аннотации
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 
@@ -67,7 +67,6 @@ abstract class GenerateBuildPassportTask : DefaultTask() {
     @get:Input
     abstract val projectName: Property<String>
 
-    // Входной параметр: корневая директория проекта
     @get:InputDirectory
     @get:PathSensitive(PathSensitivity.RELATIVE)
     abstract val projectDir: DirectoryProperty
@@ -88,15 +87,14 @@ abstract class GenerateBuildPassportTask : DefaultTask() {
 
         properties.setProperty("build.message", "Сборка проекта ${projectName.get()}")
 
-        // Используем переданную projectDir для построения пути
         val outputDir = projectDir.get().asFile.toPath().resolve("src/main/resources").toFile()
         outputDir.mkdirs()
 
         val file = File(outputDir, "build-passport.properties")
         file.outputStream().use { properties.store(it, "Build Passport") }
 
-        println("✅ Build passport generated: ${file.absolutePath}")
-        println("   Содержит: user=${userName}, os=${System.getProperty("os.name")}, time=${buildTime.format(formatter)}")
+        println("Build passport generated: ${file.absolutePath}")
+        println("Содержит: user=${userName}, os=${System.getProperty("os.name")}, time=${buildTime.format(formatter)}")
     }
 }
 
@@ -105,17 +103,15 @@ tasks.register<GenerateBuildPassportTask>("generateBuildPassport") {
     description = "Генерирует файл build-passport.properties с информацией о сборке"
 
     projectName.set(project.name)
-    // Передаем корневую директорию проекта на этапе конфигурации
     projectDir.set(project.layout.projectDirectory)
 }
 
-// Указываем, что перед компиляцией Java нужно сгенерировать passport
 tasks.named("compileJava") {
     dependsOn(tasks.named("generateBuildPassport"))
 }
 
 tasks.named("processResources") {
-    mustRunAfter(tasks.named("generateBuildPassport"))
+	dependsOn(tasks.named("generateBuildPassport"))
 }
 
 tasks.named("processTestResources") {
