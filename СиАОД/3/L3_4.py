@@ -40,4 +40,3 @@ for i in range(70, 100):
 
 min_cost, route = min_path_cost(grid)
 print(f"Минимальная стоимость: {min_cost}")
-print(f"Маршрут (первые 10 шагов): {route[:10]}")

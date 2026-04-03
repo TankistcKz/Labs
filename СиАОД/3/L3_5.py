@@ -4,7 +4,6 @@ def parse_time(t):
     return t[0] * 60 + t[1]
 
 def greedy_schedule(events):
-    # Преобразуем в удобный формат
     parsed = []
     for event in events:
         name, day, start, end, desc = event
@@ -12,7 +11,6 @@ def greedy_schedule(events):
         end_min = parse_time(end)
         parsed.append((day, start_min, end_min, name, desc))
     
-    # Сортируем по дню и времени окончания
     parsed.sort(key=lambda x: (x[0], x[2]))
     
     selected = []
@@ -25,10 +23,8 @@ def greedy_schedule(events):
     
     return selected
 
-# Загрузка данных
 with open('works.txt', 'r', encoding='utf-8') as f:
     content = f.read()
-    # Выполняем eval только для безопасной структуры
     events = eval(content.split('=')[1].strip())
 
 schedule = greedy_schedule(events)

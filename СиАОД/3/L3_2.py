@@ -22,4 +22,3 @@ daily_profit = [12, -5, 7, 9, -14, 3, 8, -2, 6, -11, 15, 4, -7, 10, 2, -9, 5, 13
 
 max_sum, segment = max_subarray(daily_profit)
 print(f"Максимальная сумма: {max_sum}")
-print(f"Участок: {segment}")
