@@ -6,7 +6,7 @@ from telebot import types, apihelper
 #from pyowm.utils import timestamps
 import os
 
-bot = telebot.TeleBot("6081528871:AAHy4BSj5OXrywzsdIaUHbtt_XmbWj3XEKo", parse_mode=None)
+bot = telebot.TeleBot("6081528871:AAHwyaMuWdD3T02wKyeRrNSTNCXvAQaCFWA", parse_mode=None)
 wikipedia.set_lang("ru")
 
 keyboard = types.ReplyKeyboardMarkup(True)
@@ -48,7 +48,7 @@ def dialogs():
     s += '\nМои возможности => /help'
     return s
 
-#def get_weather(city):
+def get_weather(city):
     observation = mgr.weather_at_place(str(city))
     forecast=mgr.forecast_at_place(str(city),'3h')
     w = observation.weather
@@ -61,7 +61,7 @@ def dialogs():
 
 def getmem():
     try:
-        mem = random.randint(291000, 308118)
+        mem = random.randint(291000, 309907)
         return f'https://vk.com/albums-43135804?z=photo-43135804_457{mem}%2Fphotos-43135804'
     
     except telebot.apihelper.ApiTelegramException:
@@ -86,9 +86,9 @@ def getwiki(s):
                    wikitext2=wikitext2+x+'.'
             else:
                 break
-        wikitext2 = re.sub('\([^()]*\)', '', wikitext2)
-        wikitext2 = re.sub('\([^()]*\)', '', wikitext2)
-        wikitext2 = re.sub('\{[^\{\}]*\}', '', wikitext2)
+        wikitext2 = re.sub(r'\([^()]*\)', '', wikitext2)
+        wikitext2 = re.sub(r'\([^()]*\)', '', wikitext2)
+        wikitext2 = re.sub(r'\{[^\{\}]*\}', '', wikitext2)
         return wikitext2
     except Exception as e:
         return '❌В энциклопедии нет информации об этом❌'
