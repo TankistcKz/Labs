@@ -1,0 +1,46 @@
+services:
+    db:
+        image: postgres:13
+        networks:
+          - backend
+        volumes:
+          - postgres_data:/var/lib/postgresql/data
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: devopsLabs
+        restart: no
+
+    api:
+        build: ./backend
+        networks:
+          - frontend
+          - backend
+        ports:
+          - "8080:8080"
+        env_file:
+          - ./backend/.env
+        depends_on:
+          - db
+        restart: no
+
+    nginx:
+        build: ./nginx
+        networks:
+          - frontend
+        ports:
+          - "80:80"
+        volumes:
+          - ./nginx/dist:/public
+        depends_on:
+          - api
+        restart: no
+
+volumes:
+    postgres_data:
+
+networks:
+    frontend:
+        driver: bridge
+    backend:
+        driver: bridge
