@@ -12,7 +12,7 @@ from telebot import types
 # ──────────────────────────────────────────────
 # Конфигурация
 # ──────────────────────────────────────────────
-BOT_TOKEN = os.getenv("BOT_TOKEN", "6081528871:AAHwyaMuWdD3T02wKyeRrNSTNCXvAQaCFWA")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "Пошли нахуй")
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode=None)
 wikipedia.set_lang("ru")
 
