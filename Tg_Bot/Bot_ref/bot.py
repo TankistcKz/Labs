@@ -8,11 +8,13 @@ import wikipedia
 import bs4
 import requests
 from telebot import types
+from dotenv import load_dotenv
 
 # ──────────────────────────────────────────────
 # Конфигурация
 # ──────────────────────────────────────────────
-BOT_TOKEN = os.getenv("BOT_TOKEN", "Пошли нахуй")
+load_dotenv()
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode=None)
 wikipedia.set_lang("ru")
 
@@ -216,7 +218,6 @@ def cb_tank_country(call: types.CallbackQuery) -> None:
 
     kb = types.InlineKeyboardMarkup()
     for tank_name in tanks_in_country:
-        # убираем ведущий / для callback_data (там нельзя использовать /)
         safe_name = tank_name.lstrip("/")
         kb.add(types.InlineKeyboardButton(tank_name, callback_data=f"tank_{safe_name}"))
 
