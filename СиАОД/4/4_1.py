@@ -1,132 +1,102 @@
-def linear_search_barrier(arr, target):
-    arr.append(target)  # барьер
-    i = 0
-    comparisons = 0
-    iterations = 0
-    shifts = 0
-    while arr[i] != target:
-        comparisons += 1
-        i += 1
-        iterations += 1
-        shifts += 1
-    arr.pop()
-    if i == len(arr):
-        return -1, comparisons, iterations, shifts
-    return i, comparisons, iterations, shifts
-    
+import numpy as np
+import time
+import random
+import math
+from typing import List, Tuple, Any
+import matplotlib.pyplot as plt
 
-def binary_search(arr, target):
+
+"""Модифицированный линейный поиск с барьером.Возвращает индекс элемента или -1, если не найден."""
+def modified_linear_search(arr: List, target: Any) -> int:
+    n = len(arr)
+    if n == 0:
+        return -1
+    # Барьер: временно добавляем искомый элемент в конец
+    last = arr[-1]
+    arr[-1] = target
+    i = 0
+    while arr[i] != target:
+        i += 1
+    # Восстанавливаем последний элемент
+    arr[-1] = last
+    if i < n - 1 or last == target:
+        return i
+    return -1
+
+"""Бинарный поиск. Массив должен быть отсортирован по возрастанию."""
+def binary_search(arr: List, target: Any) -> int:
     left, right = 0, len(arr) - 1
-    comparisons = 0
-    iterations = 0
-    shifts = 0
     while left <= right:
-        iterations += 1
         mid = (left + right) // 2
-        shifts += 1
-        comparisons += 1
         if arr[mid] == target:
-            return mid, comparisons, iterations, shifts
+            return mid
         elif arr[mid] < target:
             left = mid + 1
         else:
             right = mid - 1
-        shifts += 1
-    return -1, comparisons, iterations, shifts
-    
+    return -1
 
-def interpolation_search(arr, target):
+"""Интерполяционный поиск. Массив должен быть отсортирован по возрастанию."""
+def interpolation_search(arr: List, target: Any) -> int:
     low, high = 0, len(arr) - 1
-    comparisons = 0
-    iterations = 0
-    shifts = 0
     while low <= high and arr[low] <= target <= arr[high]:
-        iterations += 1
-        if arr[high] == arr[low]:
-            pos = low
-        else:
-            pos = low + ((target - arr[low]) * (high - low)) // (arr[high] - arr[low])
-        shifts += 1
-        comparisons += 1
+        if low == high:
+            if arr[low] == target:
+                return low
+            break
+        # Формула интерполяции
+        pos = low + ((target - arr[low]) * (high - low)) // (arr[high] - arr[low])
+        if pos < low or pos > high:
+            break
         if arr[pos] == target:
-            return pos, comparisons, iterations, shifts
+            return pos
         elif arr[pos] < target:
             low = pos + 1
         else:
             high = pos - 1
-        shifts += 1
-    return -1, comparisons, iterations, shifts
-    
+    return -1
 
-def exponential_search(arr, target):
+"""Экспоненциальный поиск в отсортированном массиве."""
+def exponential_search(arr: List, target: Any) -> int:
+    n = len(arr)
+    if n == 0:
+        return -1
     if arr[0] == target:
-        return 0, 1, 1, 0
+        return 0
     i = 1
-    comparisons = 1
-    iterations = 0
-    shifts = 0
-    while i < len(arr) and arr[i] <= target:
-        comparisons += 1
+    while i < n and arr[i] <= target:
         i *= 2
-        iterations += 1
-        shifts += 1
-    left, right = i // 2, min(i, len(arr) - 1)
-    res, c, it, sh = binary_search(arr[left:right+1], target)
-    if res != -1:
-        return left + res, comparisons + c, iterations + it, shifts + sh
-    return -1, comparisons + c, iterations + it, shifts + sh
-    
+    # Бинарный поиск на интервале [i//2, min(i, n-1)]
+    left = i // 2
+    right = min(i, n - 1)
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+                
+
+sorted_arr = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+unsorted_arr = [11, 3, 29, 7, 2, 17, 5, 13, 23, 19]
 
 test_cases = [
-    ([1, 3, 5, 7, 9], 5),
-    ([1, 3, 5, 7, 9], 2),
-    ([10, 20, 30, 40, 50], 10),
-    ([10, 20, 30, 40, 50], 50),
-    ([10, 20, 30, 40, 50], 100),
-    ([5], 5),
-    ([5], 3)
+    ("Присутствует (5)", sorted_arr, 5, True),
+    ("Отсутствует (15)", sorted_arr, 15, True),
+    ("Присутствует (11)", unsorted_arr, 11, False),
+    ("Отсутствует (99)", unsorted_arr, 99, False),
 ]
 
-print("=" * 80)
-print("ТЕСТИРОВАНИЕ МОДИФИЦИРОВАННОГО ЛИНЕЙНОГО ПОИСКА")
-print("=" * 80)
-for arr, target in test_cases:
-    result = linear_search_barrier(arr.copy(), target)
-    print(f"Массив: {arr}, Искомое: {target} -> Индекс: {result}")
-
-print("\n" + "=" * 80)
-print("ТЕСТИРОВАНИЕ БИНАРНОГО ПОИСКА")
-print("=" * 80)
-for arr, target in test_cases:
-    result = binary_search(arr, target)
-    print(f"Массив: {arr}, Искомое: {target} -> Индекс: {result}")
-
-print("\n" + "=" * 80)
-print("ТЕСТИРОВАНИЕ ИНТЕРПОЛЯЦИОННОГО ПОИСКА")
-print("=" * 80)
-for arr, target in test_cases:
-    result = interpolation_search(arr, target)
-    print(f"Массив: {arr}, Искомое: {target} -> Индекс: {result}")
-
-print("\n" + "=" * 80)
-print("ТЕСТИРОВАНИЕ ЭКСПОНЕНЦИАЛЬНОГО ПОИСКА")
-print("=" * 80)
-for arr, target in test_cases:
-    result = exponential_search(arr, target)
-    print(f"Массив: {arr}, Искомое: {target} -> Индекс: {result}")
-
-print("\n" + "=" * 80)
-print("СРАВНЕНИЕ РЕЗУЛЬТАТОВ ВСЕХ АЛГОРИТМОВ")
-print("=" * 80)
-arr = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-targets = [4, 12, 20, 1, 15]
-
-print(f"Отсортированный массив: {arr}\n")
-print(f"{'Элемент':<15}{'Linear':<15}{'Binary':<15}{'Interpolation':<15}{'Exponential':<15}")
-print("-" * 75)
-for target in targets:
-    r1 = linear_search_barrier(arr.copy(), target)
-    r2 = binary_search(arr, target)
-    r3 = interpolation_search(arr, target)
-    r4 = exponential_search(arr, target)
-    print(f"{target:<15}{r1:<15}{r2:<15}{r3:<15}{r4:<15}")
+for description, arr, target, is_sorted in test_cases:
+    print(f"\nТест: {description} | Массив: {arr} | Искомое: {target}")
+    arr_copy = arr[:]
+    print(f"  Модифицированный линейный: {modified_linear_search(arr_copy, target)}")
+    if is_sorted:
+        print(f"  Бинарный: {binary_search(arr[:], target)}")
+        print(f"  Интерполяционный: {interpolation_search(arr[:], target)}")
+        print(f"  Экспоненциальный: {exponential_search(arr[:], target)}")
+    else:
+        print(f"  (Бинарный/интерпол./эксп. пропущены — массив не отсортирован)")
