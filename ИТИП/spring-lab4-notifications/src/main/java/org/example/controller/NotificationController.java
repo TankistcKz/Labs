@@ -70,16 +70,67 @@ public class NotificationController {
                 .map(this::mapToDto)
                 .toList();
     }
-
-    private NotificationDto mapToDto(Notification notification) {
-        return NotificationDto.builder()
-                .title(notification.getTitle())
-                .message(notification.getMessage())
-                .channel(notification.getChannel())
-                .status(notification.getStatus())
-                .createdAt(notification.getCreatedAt())
-                .sentAt(notification.getSentAt())
-                .recipientId(notification.getRecipient().getId())
-                .build();
-    }
+    
+    @GetMapping("/search")
+        public List<NotificationDto> getByStatusAndChannel(
+                @RequestParam NotificationStatus status,
+                @RequestParam NotificationChannel channel) {
+            return notificationService.getByStatusAndChannel(status, channel).stream()
+                    .map(this::mapToDto)
+                    .toList();
+        }
+        
+        @GetMapping("/status/{status}/sorted")
+        public List<NotificationDto> getByStatusSorted(
+                @PathVariable NotificationStatus status,
+                @RequestParam(defaultValue = "asc") String order) {
+            List<Notification> notifications;
+            if ("desc".equalsIgnoreCase(order)) {
+                notifications = notificationService.getByStatusOrderByCreatedAtDesc(status);
+            } else {
+                notifications = notificationService.getByStatusOrderByCreatedAtAsc(status);
+            }
+            return notifications.stream()
+                    .map(this::mapToDto)
+                    .toList();
+        }
+        
+        @GetMapping("/jpql/status/{status}/channel/{channel}")
+        public List<NotificationDto> getByStatusAndChannelJPQL(
+                @PathVariable NotificationStatus status,
+                @PathVariable NotificationChannel channel) {
+            return notificationService.getByStatusAndChannelCustom(status, channel).stream()
+                    .map(this::mapToDto)
+                    .toList();
+        }
+        
+        @GetMapping("/native/status/{status}/channel/{channel}")
+        public List<NotificationDto> getNativeByStatusAndChannel(
+                @PathVariable String status,
+                @PathVariable String channel) {
+            return notificationService.getNativeByStatusAndChannel(status, channel).stream()
+                    .map(this::mapToDto)
+                    .toList();
+        }
+        
+        @GetMapping("/recipient/{recipientId}/status/{status}")
+        public List<NotificationDto> getByRecipientAndStatus(
+                @PathVariable Long recipientId,
+                @PathVariable NotificationStatus status) {
+            return notificationService.getByRecipientIdAndStatus(recipientId, status).stream()
+                    .map(this::mapToDto)
+                    .toList();
+        }
+        
+        private NotificationDto mapToDto(Notification notification) {
+            return NotificationDto.builder()
+                    .title(notification.getTitle())
+                    .message(notification.getMessage())
+                    .channel(notification.getChannel())
+                    .status(notification.getStatus())
+                    .createdAt(notification.getCreatedAt())
+                    .sentAt(notification.getSentAt())
+                    .recipientId(notification.getRecipient().getId())
+                    .build();
+        }
 }

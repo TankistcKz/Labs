@@ -75,4 +75,28 @@ public class NotificationService {
     public List<Notification> getNotificationsByRecipientId(Long recipientId) {
         return notificationRepository.findByRecipientId(recipientId);
     }
+    
+    public List<Notification> getByStatusAndChannel(NotificationStatus status, NotificationChannel channel) {
+        return notificationRepository.findByStatusAndChannel(status, channel);
+    }
+    
+    public List<Notification> getByStatusOrderByCreatedAtAsc(NotificationStatus status) {
+        return notificationRepository.findByStatusOrderByCreatedAtAsc(status);
+    }
+    
+    public List<Notification> getByStatusOrderByCreatedAtDesc(NotificationStatus status) {
+        return notificationRepository.findByStatusOrderByCreatedAtDesc(status);
+    }
+    
+    public List<Notification> getByStatusAndChannelCustom(NotificationStatus status, NotificationChannel channel) {
+        return notificationRepository.findByStatusAndChannelCustom(status, channel);
+    }
+    
+    public List<Notification> getNativeByStatusAndChannel(String status, String channel) {
+        return notificationRepository.findNativeByStatusAndChannel(status, channel);
+    }
+    
+    public List<Notification> getByRecipientIdAndStatus(Long recipientId, NotificationStatus status) {
+        return notificationRepository.findByRecipientIdAndStatus(recipientId, status);
+    }
 }
