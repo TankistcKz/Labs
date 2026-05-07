@@ -25,7 +25,7 @@ def binary_search(arr, target):
 
 
 N = 50000
-K_values = [1, 5, 10, 25, 50, 100, 250, 500, 1000, 2000, 5000]
+K_values = [1, 5, 10, 25, 50, 100, 250, 500, 1000, 2000, 4000, 5000]
    
 arr_original = [random.randint(1, 10**6) for _ in range(N)]
 all_targets = [random.choice(arr_original) for _ in range(max(K_values))]
